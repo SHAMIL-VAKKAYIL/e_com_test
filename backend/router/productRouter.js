@@ -56,7 +56,7 @@ router.get('/allproductget', verifyToken, async (req, res) => {
 
 router.post('/addTocart', verifyToken, async (req, res) => {
     const { prodctname, productcompany, productimage, productprice, productdesc } = req.body
-    console.log(productcompany, productimage, productprice, productdesc, userId, prodctname);
+    console.log(productcompany, productimage, productprice, productdesc, prodctname);
 
     // try {
     //     const newCart = new cart(req.body);
