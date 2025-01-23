@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import AdminSignup from './AdminPage/AdminSignup'
 import AdminLogin from './AdminPage/AdminLogin'
 import AdminHome from './AdminPage/AdminHome'
+import Cart from './pages/Cart'
 
 
 
@@ -26,6 +27,10 @@ function App() {
     {
       path: '/',
       element: Token ? <Home /> : <Login />
+    },
+    {
+      path: '/cart',
+      element: Token ? <Cart /> : <Login />
     },
 
     // Admin routes

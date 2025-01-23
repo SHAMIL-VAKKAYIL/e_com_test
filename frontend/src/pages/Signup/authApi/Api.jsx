@@ -17,8 +17,6 @@ export const userLogin = async (data, dispatch) => {
         dispatch(LoginData(response.data))
     } catch (error) {
         console.log('Error:', error)
-
-
     }
 }
 

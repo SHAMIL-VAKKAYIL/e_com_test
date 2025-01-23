@@ -4,6 +4,7 @@ import { LogoutData } from '../../redux/userSlice'
 import { getAllProducts } from '../Signup/authApi/Api'
 import './Home.css'
 import { UserTokenRequest } from '../../AxiosCreate'
+import { Link } from 'react-router-dom'
 function Home() {
 
     const dispatch = useDispatch()
@@ -27,15 +28,18 @@ function Home() {
 
 
     const addTocart = async (data) => {
-        console.log(data);
-        await UserTokenRequest.post('/product/addTocart',{ data, userId})
 
+        const response = await UserTokenRequest.post('/product/addTocart', { data, userId })
+        alert(response.data)
     }
+
     return (
         <div>
             <div className='navbar'>
                 <button onClick={() => dispatch(LogoutData())}>Logout</button>
-                <button>cart</button>
+                <Link to={'/cart'}>
+                    <button>cart</button>
+                </Link>
             </div>
             <br />
             <div className='mainDiv'>

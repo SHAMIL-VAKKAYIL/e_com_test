@@ -4,6 +4,11 @@ const path = require('path')
 const productSchema = require('../models/ProductSchema')
 const verifyToken = require('../TokenVerification')
 const cart = require('../models/addToCartSchema')
+
+
+
+
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const uploadDir = path.resolve(__dirname, '../../frontend/public/images')
@@ -50,24 +55,43 @@ router.get('/allproductget', verifyToken, async (req, res) => {
     } catch (error) {
         console.log('err getting data');
 
+
         res.status(404).json('error getting data ', error)
     }
 })
 
 router.post('/addTocart', verifyToken, async (req, res) => {
-    const { prodctname, productcompany, productimage, productprice, productdesc } = req.body
-    console.log(productcompany, productimage, productprice, productdesc, userId, prodctname);
 
-    // try {
-    //     const newCart = new cart(req.body);
-    //     await newCart.save();
+    const { data, userId } = req.body
 
-    //     res.status(200).json('Product added to cart successfully');
+    const { productimage, prodctname, productprice, productcompany, productdesc } = data
 
-    // } catch (error) {
-    //     console.log(error);
-    //     res.status(400).json('error adding to cart');
+    try {
+        const newCart = new cart({ productimage, prodctname, productprice, productcompany, productdesc, UserId: userId });
+        await newCart.save();
 
-    // }
+        res.status(200).json('Product added to cart successfully');
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json('error adding to cart');
+
+    }
 })
+
+router.get('/cart/:id', verifyToken, async (req, res) => {
+
+    const userid = req.params.id
+
+    try {
+        const UserCart =await cart.find({ UserId: userid })
+        res.status(200).json(UserCart);
+        
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json('error getiing  cart');
+    }
+})
+
 module.exports = router
